@@ -1,5 +1,6 @@
 package com.mundotrujas.luzcristominalabanza.Ministerio.Data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -28,11 +29,35 @@ public class MinisterioContract {
                                                     FIELD_ESTADO + " INTEGER NOT NULL" +
                                                     ");";
 
-    SQLiteDatabase SqLiteData;
+    private SQLiteDatabase db;
+    private MinisterioDbHelper DbHelper;
+    // Método y contructir parta crear la Bd y la tabla.
     public MinisterioContract(Context context) {
-         // Instanciamos una objeto de Tipo creacion de Tabla y la Base de Datos.
-        MinisterioDbHelper DbHelper = new MinisterioDbHelper(context);
+         // Instanciamos una objeto de Tipo creación de Tabla y la Base de Datos.
+        DbHelper = new MinisterioDbHelper(context);
          // Ponemos la base de datos modo escritura.
-        SqLiteData  = DbHelper.getWritableDatabase();
+        db  = DbHelper.getWritableDatabase();
+    }
+
+    // Método para insertar datoa a la tabla
+    public void InsertarDatos(String pNombres, String pApellidos, int pIdInstrumento, int pEstado)
+    {
+        // envia para insertar datos al la tabla persona.
+        db.insert(TABLE_NAME, null, AsignarValores(pNombres, pApellidos, pIdInstrumento, pEstado));
+    }
+
+    // Método para asignar valores
+    private ContentValues AsignarValores(String pNombres, String pApellidos, int pIdInstrumento, int pEstado)
+    {
+        // Instanciar objeto
+        ContentValues valores =  new ContentValues();
+        // Asignar los valores al par ordenado.
+        valores.put(FIELD_NOMBRES, pNombres);
+        valores.put(FIELD_APELLIDOS, pApellidos);
+        valores.put(FIELD_ID_INSTRUMENTO, pIdInstrumento);
+        valores.put(FIELD_ESTADO, pEstado);
+
+        return valores;
     }
 }
+

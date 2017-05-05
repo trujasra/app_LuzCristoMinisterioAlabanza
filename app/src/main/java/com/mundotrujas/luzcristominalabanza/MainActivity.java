@@ -15,5 +15,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Creacion del Objeto para crear la BD y la tabla.
         MinisterioContract MinContract = new MinisterioContract(this);
+
+        // enviamos al metodo para insertar datos a la tabla de persona.
+        MinContract.InsertarDatos("Ramiro", "Trujillo Almanza", 1, 2);
     }
 }
